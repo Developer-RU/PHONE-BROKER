@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="mqtt_hub API docs, for the Dart programming language.">
+  <title>mqtt_hub - Dart API docs</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="static-assets/github.css?v1">
+  <link rel="stylesheet" href="static-assets/styles.css?v1">
+  <link rel="icon" href="static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li class="self-crumb">mqtt_hub package</li>
+  </ol>
+  <div class="self-name">mqtt_hub</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+  <div id="dartdoc-main-content" class="main-content">
+      
+<section class="desc markdown">
+  <h1 id="phone-broker-for-iphone-mqtt-broker-on-device">Phone BROKER for iPhone (MQTT Broker on Device)</h1>
+<p>Phone BROKER is a full-featured iOS application that allows you to run lightweight MQTT brokers directly on iPhone.</p>
+<p>The project is distributed as a free open-source solution: you can inspect the source code, verify behavior, adapt the UI/UX, and use it in your own workflows.</p>
+<h2 id="why-this-project-exists">Why This Project Exists</h2>
+<p>Many teams, engineers, and IoT enthusiasts need a quick local MQTT endpoint for testing, demos, diagnostics, and offline development.</p>
+<p>Phone BROKER solves this with one device:</p>
+<ul>
+<li>No dedicated server is required for local scenarios.</li>
+<li>No cloud subscription is required for basic local broker tasks.</li>
+<li>No hidden runtime lock-in.</li>
+</ul>
+<p>You can emulate and test MQTT server behavior in a local network using only your phone.</p>
+<h2 id="core-capabilities">Core Capabilities</h2>
+<ul>
+<li>Create and run multiple MQTT broker configurations on iPhone.</li>
+<li>Start, stop, restart, duplicate, and delete brokers.</li>
+<li>Use independent ports for each broker.</li>
+<li>Monitor status and runtime diagnostics.</li>
+<li>View live broker logs and system logs.</li>
+<li>Import and export broker configurations (JSON workflows).</li>
+<li>Configure language and app-level settings.</li>
+<li>Use network diagnostics views for local troubleshooting.</li>
+</ul>
+<h2 id="typical-use-cases">Typical Use Cases</h2>
+<ul>
+<li>Rapid IoT prototyping in a home/lab network.</li>
+<li>QA testing for MQTT clients without external infrastructure.</li>
+<li>Demo environments for local device communication.</li>
+<li>Educational labs for MQTT protocol basics.</li>
+<li>Temporary local broker endpoint while traveling/offline.</li>
+</ul>
+<h2 id="technology-stack">Technology Stack</h2>
+<ul>
+<li>Flutter + Dart</li>
+<li>iOS host project via Xcode</li>
+<li>SQLite storage (<code>sqflite</code>)</li>
+<li>State management with <code>provider</code></li>
+<li>CocoaPods for iOS native dependencies</li>
+</ul>
+<h2 id="project-layout">Project Layout</h2>
+<ul>
+<li><code>ios/</code> (this folder): iOS host app project for Xcode.</li>
+<li><code>Runner.xcworkspace</code>: open this file for iOS builds and deployment.</li>
+<li><code>Runner.xcodeproj</code>: do not use directly when CocoaPods is enabled.</li>
+<li><code>../lib/</code>: Flutter application source code.</li>
+<li><code>../assets/</code>: app icons and visual assets.</li>
+</ul>
+<h2 id="requirements">Requirements</h2>
+<p>Before building, install:</p>
+<ol>
+<li>macOS (recommended current stable release)</li>
+<li>Xcode (latest stable version)</li>
+<li>Flutter SDK (stable channel)</li>
+<li>CocoaPods (<code>pod</code> command available)</li>
+<li>iPhone (optional, for real-device deployment)</li>
+</ol>
+<h2 id="initial-setup">Initial Setup</h2>
+<p>Run from project root (<code>ios_app</code>):</p>
+<pre class="language-bash"><code class="language-bash">flutter pub get
+cd ios
+pod install
+cd ..
+</code></pre>
+<h2 id="running-in-xcode-recommended-for-ios">Running in Xcode (Recommended for iOS)</h2>
+<ol>
+<li>Open <code>ios/Runner.xcworkspace</code> in Xcode.</li>
+<li>Select target <code>Runner</code>.</li>
+<li>Open <code>Signing &amp; Capabilities</code>.</li>
+<li>Choose your Apple Team.</li>
+<li>Select a device (simulator or physical iPhone).</li>
+<li>Run with <code>Product -&gt; Run</code>.</li>
+</ol>
+<h2 id="running-from-cli">Running from CLI</h2>
+<p>From <code>ios_app</code> root:</p>
+<pre class="language-bash"><code class="language-bash">flutter run -d &lt;device_id&gt;
+</code></pre>
+<p>For profile build:</p>
+<pre class="language-bash"><code class="language-bash">flutter run --profile -d &lt;device_id&gt;
+</code></pre>
+<p>For release build:</p>
+<pre class="language-bash"><code class="language-bash">flutter run --release -d &lt;device_id&gt;
+</code></pre>
+<h2 id="build-commands">Build Commands</h2>
+<p>Debug build without signing:</p>
+<pre class="language-bash"><code class="language-bash">flutter build ios --debug --no-codesign
+</code></pre>
+<p>Release build (signed by Xcode team settings):</p>
+<pre class="language-bash"><code class="language-bash">flutter build ios --release
+</code></pre>
+<h2 id="installing-to-personal-devices">Installing to Personal Devices</h2>
+<ol>
+<li>Connect iPhone by USB for first deployment.</li>
+<li>Trust computer on device if prompted.</li>
+<li>Enable Developer Mode on iPhone.</li>
+<li>In Xcode, select your Team and bundle signing.</li>
+<li>Deploy from Xcode or Flutter CLI.</li>
+</ol>
+<p>If iOS shows untrusted developer warning:</p>
+<ol>
+<li>iPhone Settings -&gt; General -&gt; VPN &amp; Device Management</li>
+<li>Select your developer profile</li>
+<li>Tap Trust</li>
+</ol>
+<h2 id="notes-about-wireless-debugging">Notes About Wireless Debugging</h2>
+<ul>
+<li>Wireless deployment can be unstable on newer iOS versions.</li>
+<li>If connection drops, use USB + Xcode <code>Product -&gt; Run</code>.</li>
+<li>App launch can still succeed even if Flutter VM service disconnects.</li>
+</ul>
+<h2 id="app-stability-notes">App Stability Notes</h2>
+<p>The project includes startup protections for repeated launches:</p>
+<ul>
+<li>Bootstrap timeout protection</li>
+<li>SQLite open timeout and recovery path</li>
+<li>Graceful lifecycle recovery handling</li>
+</ul>
+<p>These safeguards reduce startup hangs after force-close and relaunch.</p>
+<h2 id="functional-scope-and-limits">Functional Scope and Limits</h2>
+<ul>
+<li>Designed for local and edge scenarios.</li>
+<li>iOS may suspend sockets in background/locked state.</li>
+<li>Continuous background uptime is constrained by iOS policy.</li>
+</ul>
+<h2 id="customization-and-redesign">Customization and Redesign</h2>
+<p>You can modify the project freely:</p>
+<ul>
+<li>UI and brand style</li>
+<li>localization and text</li>
+<li>broker defaults</li>
+<li>diagnostics and logging behavior</li>
+</ul>
+<p>Source is provided so you can verify exactly how the app works and adapt it for your own use.</p>
+<h2 id="quality-and-verification">Quality and Verification</h2>
+<p>Run static checks:</p>
+<pre class="language-bash"><code class="language-bash">flutter analyze
+</code></pre>
+<p>Recommended manual checks:</p>
+<ol>
+<li>Create broker</li>
+<li>Start broker</li>
+<li>Connect local MQTT client</li>
+<li>Publish/subscribe test</li>
+<li>Force-close app and relaunch</li>
+<li>Verify logs and broker recovery behavior</li>
+</ol>
+<h2 id="community-and-support">Community and Support</h2>
+<p>If this project helps your work:</p>
+<ul>
+<li>Share feedback and bug reports</li>
+<li>Leave comments and suggestions</li>
+<li>Support development with stars, likes, and donations</li>
+</ul>
+<p>This project is built for real-world use by developers and IoT practitioners who need a reliable, free, and transparent local MQTT broker solution on iPhone.</p>
+</section>
+
+
+      <section class="summary">
+          <h2>Libraries</h2>
+        <dl>
+          <dt id="main">
+  <span class="name"><a href="main/">main</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+        </dl>
+      </section>
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li class="self-crumb">mqtt_hub package</li>
+</ol>
+
+    <h5 class="hidden-xs"><span class="package-name">mqtt_hub</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Libraries</li>
+      <li><a href="main/">main</a></li>
+</ol>
+
+  </div>
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div>
+</main>
+<footer>
+  <span class="no-break">
+    mqtt_hub
+      1.0.0+1
+  </span>
+  
+</footer>
+
+
+<script src="static-assets/highlight.pack.js?v1"></script>
+<script src="static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+
