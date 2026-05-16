@@ -9,6 +9,19 @@ PHONE BROKER is a full-featured iOS application that allows you to run lightweig
 
 The project is distributed as a free open-source solution: you can inspect the source code, verify behavior, adapt the UI/UX, and use it in your own workflows.
 
+## Screenshots
+
+<p align="center">
+	<img src="docs/screenshots/brokers.png" width="220" alt="Brokers screen" />
+	<img src="docs/screenshots/settings.png" width="220" alt="Settings screen" />
+	<img src="docs/screenshots/debug.png" width="220" alt="Debug screen" />
+</p>
+
+<p align="center">
+	<img src="docs/screenshots/broker-settings.png" width="220" alt="Broker settings screen" />
+	<img src="docs/screenshots/import-export.png" width="220" alt="Import and export screen" />
+</p>
+
 ## Why This Project Exists
 
 Many teams, engineers, and IoT enthusiasts need a quick local MQTT endpoint for testing, demos, diagnostics, and offline development.
