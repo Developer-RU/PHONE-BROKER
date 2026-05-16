@@ -35,14 +35,11 @@ The project is distributed as a free open-source solution: you can inspect the s
 ## Screenshots
 
 <p align="center">
-	<img src="docs/screenshots/brokers.png" width="220" alt="Brokers screen" />
-	<img src="docs/screenshots/settings.png" width="220" alt="Settings screen" />
-	<img src="docs/screenshots/debug.png" width="220" alt="Debug screen" />
-</p>
-
-<p align="center">
-	<img src="docs/screenshots/broker-settings.png" width="220" alt="Broker settings screen" />
-	<img src="docs/screenshots/import-export.png" width="220" alt="Import and export screen" />
+	<img src="docs/screenshots/brokers.png" width="19%" alt="Brokers screen" />
+	<img src="docs/screenshots/settings.png" width="19%" alt="Settings screen" />
+	<img src="docs/screenshots/debug.png" width="19%" alt="Debug screen" />
+	<img src="docs/screenshots/broker-settings.png" width="19%" alt="Broker settings screen" />
+	<img src="docs/screenshots/import-export.png" width="19%" alt="Import and export screen" />
 </p>
 
 ## Why This Project Exists
