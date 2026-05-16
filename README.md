@@ -1,6 +1,6 @@
-# Phone BROKER for iPhone (MQTT Broker on Device)
+# PHONE BROKER for iPhone (MQTT Broker on Device)
 
-Phone BROKER is a full-featured iOS application that allows you to run lightweight MQTT brokers directly on iPhone.
+PHONE BROKER is a full-featured iOS application that allows you to run lightweight MQTT brokers directly on iPhone.
 
 The project is distributed as a free open-source solution: you can inspect the source code, verify behavior, adapt the UI/UX, and use it in your own workflows.
 
@@ -8,7 +8,7 @@ The project is distributed as a free open-source solution: you can inspect the s
 
 Many teams, engineers, and IoT enthusiasts need a quick local MQTT endpoint for testing, demos, diagnostics, and offline development.
 
-Phone BROKER solves this with one device:
+PHONE BROKER solves this with one device:
 
 - No dedicated server is required for local scenarios.
 - No cloud subscription is required for basic local broker tasks.
