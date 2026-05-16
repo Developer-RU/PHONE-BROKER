@@ -1,5 +1,10 @@
 # PHONE BROKER for iPhone (MQTT Broker on Device)
 
+[![Release](https://img.shields.io/github/v/release/Developer-RU/PHONE-BROKER?label=release)](https://github.com/Developer-RU/PHONE-BROKER/releases)
+[![License: MIT](https://img.shields.io/github/license/Developer-RU/PHONE-BROKER)](https://github.com/Developer-RU/PHONE-BROKER/blob/main/LICENSE)
+[![Platform: iOS](https://img.shields.io/badge/platform-iOS-blue)](https://developer.apple.com/ios/)
+[![Flutter](https://img.shields.io/badge/flutter-3.x-02569B?logo=flutter)](https://flutter.dev)
+
 PHONE BROKER is a full-featured iOS application that allows you to run lightweight MQTT brokers directly on iPhone.
 
 The project is distributed as a free open-source solution: you can inspect the source code, verify behavior, adapt the UI/UX, and use it in your own workflows.
