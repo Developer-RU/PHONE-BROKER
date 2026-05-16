@@ -9,6 +9,29 @@ PHONE BROKER is a full-featured iOS application that allows you to run lightweig
 
 The project is distributed as a free open-source solution: you can inspect the source code, verify behavior, adapt the UI/UX, and use it in your own workflows.
 
+## Table of Contents
+
+- [Screenshots](#screenshots)
+- [Why This Project Exists](#why-this-project-exists)
+- [Core Capabilities](#core-capabilities)
+- [Typical Use Cases](#typical-use-cases)
+- [Technology Stack](#technology-stack)
+- [Project Layout](#project-layout)
+- [Requirements](#requirements)
+- [Quick Start](#quick-start)
+- [Running in Xcode (Recommended for iOS)](#running-in-xcode-recommended-for-ios)
+- [Running from CLI](#running-from-cli)
+- [Build Commands](#build-commands)
+- [Installing to Personal Devices](#installing-to-personal-devices)
+- [Notes About Wireless Debugging](#notes-about-wireless-debugging)
+- [App Stability Notes](#app-stability-notes)
+- [Functional Scope and Limits](#functional-scope-and-limits)
+- [Customization and Redesign](#customization-and-redesign)
+- [Quality and Verification](#quality-and-verification)
+- [Troubleshooting](#troubleshooting)
+- [License](#license)
+- [Community and Support](#community-and-support)
+
 ## Screenshots
 
 <p align="center">
@@ -78,6 +101,18 @@ Before building, install:
 3. Flutter SDK (stable channel)
 4. CocoaPods (`pod` command available)
 5. iPhone (optional, for real-device deployment)
+
+## Quick Start
+
+If you want to run the app quickly on iOS, use this minimal flow from project root:
+
+```bash
+flutter pub get
+cd ios
+pod install
+cd ..
+flutter run -d <device_id>
+```
 
 ## Initial Setup
 
@@ -196,6 +231,28 @@ Recommended manual checks:
 4. Publish/subscribe test
 5. Force-close app and relaunch
 6. Verify logs and broker recovery behavior
+
+## Troubleshooting
+
+If the app does not start on iOS after dependency changes:
+
+```bash
+flutter clean
+flutter pub get
+cd ios
+pod deintegrate
+pod install
+cd ..
+flutter run -d <device_id>
+```
+
+If Flutter reports VM service disconnect during launch, verify whether the app actually opened on device. On iOS, transport disconnect and runtime crash are not always the same event.
+
+For signing issues, open `ios/Runner.xcworkspace` in Xcode and confirm Team, Bundle Identifier, and provisioning profile.
+
+## License
+
+This project is licensed under the MIT License. See [LICENSE](LICENSE).
 
 ## Community and Support
 
