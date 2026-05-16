@@ -2,11 +2,15 @@ import 'package:flutter/widgets.dart';
 
 import '../models/broker_models.dart';
 
+/// Provides localized strings and formatting helpers for the app.
 class AppLocalizations {
+  /// Creates a localization instance for the provided [locale].
   AppLocalizations(this.locale);
 
+  /// Active locale for string lookups.
   final Locale locale;
 
+  /// Languages supported by the application.
   static const supportedLocales = <Locale>[
     Locale('en'),
     Locale('ru'),
@@ -17,6 +21,7 @@ class AppLocalizations {
     Locale('ar'),
   ];
 
+  /// Returns localization for [context], falling back to English if missing.
   static AppLocalizations of(BuildContext context) {
     final value = Localizations.of<AppLocalizations>(context, AppLocalizations);
     if (value == null) {
@@ -25,6 +30,7 @@ class AppLocalizations {
     return value;
   }
 
+  /// Delegate used by [MaterialApp.localizationsDelegates].
   static const LocalizationsDelegate<AppLocalizations> delegate =
       _AppLocalizationsDelegate();
 
@@ -921,14 +927,17 @@ class AppLocalizations {
     },
   };
 
+  /// Returns localized value for [key], with English fallback.
   String t(String key) {
     final lang = _localizedValues[locale.languageCode];
     return lang?[key] ?? _localizedValues['en']![key] ?? key;
   }
 
+  /// Formats localized text for imported broker count.
   String importedConfigs(int count) =>
       t('importedConfigs').replaceAll('{count}', '$count');
 
+  /// Returns a localized delete-confirmation prompt.
   String deletePrompt(String name, int port) {
     return switch (locale.languageCode) {
       'ru' => 'Удалить $name на порту $port?',
@@ -941,6 +950,7 @@ class AppLocalizations {
     };
   }
 
+  /// Formats minute count according to locale conventions.
   String minutes(int value) {
     return switch (locale.languageCode) {
       'ru' => '$value мин',
@@ -953,6 +963,7 @@ class AppLocalizations {
     };
   }
 
+  /// Formats uptime as locale-specific `hours/minutes/seconds` text.
   String uptime(Duration uptime) {
     final hours = uptime.inHours;
     final minutes = uptime.inMinutes.remainder(60);
@@ -968,6 +979,7 @@ class AppLocalizations {
     };
   }
 
+  /// Returns language name translated to the active UI locale.
   String languageName(String code) {
     return switch (code) {
       'system' => t('languageSystem'),
@@ -982,7 +994,7 @@ class AppLocalizations {
     };
   }
 
-  /// Returns language name in its native language (not translated to current locale)
+  /// Returns language name in its native script, independent of UI locale.
   String nativeLanguageName(String code) {
     return switch (code) {
       'system' => t('languageSystem'),
@@ -997,6 +1009,7 @@ class AppLocalizations {
     };
   }
 
+  /// Returns localized label for a broker runtime [status].
   String statusLabel(BrokerStatus status) {
     return switch (status) {
       BrokerStatus.running => t('statusRunning'),
@@ -1006,6 +1019,7 @@ class AppLocalizations {
     };
   }
 
+  /// Returns localized label for a detected [mode].
   String networkModeLabel(NetworkMode mode) {
     return switch (mode) {
       NetworkMode.offline => t('modeOffline'),
@@ -1017,26 +1031,32 @@ class AppLocalizations {
   }
 }
 
+/// Internal delegate that wires [AppLocalizations] into Flutter localization.
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
   const _AppLocalizationsDelegate();
 
   @override
+  /// Whether a locale is supported by the app.
   bool isSupported(Locale locale) =>
       AppLocalizations.supportedLocales.any(
         (supported) => supported.languageCode == locale.languageCode,
       );
 
   @override
+  /// Loads localization resources for [locale].
   Future<AppLocalizations> load(Locale locale) async {
     return AppLocalizations(locale);
   }
 
   @override
+  /// No hot-reload localization reload is required for static in-memory maps.
   bool shouldReload(covariant LocalizationsDelegate<AppLocalizations> old) {
     return false;
   }
 }
 
+/// Convenience extension to access [AppLocalizations] as `context.l10n`.
 extension AppLocalizationsX on BuildContext {
+  /// Localization accessor for widget trees.
   AppLocalizations get l10n => AppLocalizations.of(this);
 }

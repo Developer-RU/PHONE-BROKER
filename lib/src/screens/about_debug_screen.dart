@@ -8,6 +8,7 @@ import '../services/background_service_manager.dart';
 import '../services/broker_manager.dart';
 import '../services/log_manager.dart';
 
+/// About page plus runtime diagnostics and raw packet inspection.
 class AboutDebugScreen extends StatelessWidget {
   const AboutDebugScreen({super.key});
 

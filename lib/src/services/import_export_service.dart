@@ -8,7 +8,9 @@ import 'package:share_plus/share_plus.dart';
 
 import '../models/broker_models.dart';
 
+/// Handles broker configuration/log import and export workflows.
 class ImportExportService {
+  /// Exports a single broker configuration and opens the iOS share sheet.
   Future<void> exportBrokerConfig(BrokerConfig config) async {
     final file = await _writeJsonFile(
       fileName: 'mqtt-hub-${config.name}-${config.network.port}.json',
@@ -22,6 +24,7 @@ class ImportExportService {
     );
   }
 
+  /// Exports all broker configurations into one JSON file.
   Future<void> exportAllBrokers(List<BrokerConfig> configs) async {
     final file = await _writeJsonFile(
       fileName: 'mqtt-hub-all-brokers.json',
@@ -35,6 +38,7 @@ class ImportExportService {
     );
   }
 
+  /// Exports broker logs represented by a prebuilt JSON payload.
   Future<void> exportBrokerLogs({
     required BrokerConfig config,
     required Map<String, dynamic> payload,
@@ -48,6 +52,7 @@ class ImportExportService {
     );
   }
 
+  /// Imports broker configurations from a user-selected JSON document.
   Future<List<BrokerConfig>> importBrokerConfigs() async {
     final result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
@@ -70,6 +75,7 @@ class ImportExportService {
     return brokers;
   }
 
+  /// Writes an indented JSON file into temporary storage.
   Future<File> _writeJsonFile({
     required String fileName,
     required Map<String, dynamic> payload,

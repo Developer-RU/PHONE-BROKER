@@ -7,8 +7,10 @@ import 'broker_manager.dart';
 import 'log_manager.dart';
 import 'network_manager.dart';
 
+/// Observes app lifecycle and coordinates broker/network recovery.
 class BackgroundServiceManager extends ChangeNotifier
     with WidgetsBindingObserver {
+  /// Creates a lifecycle manager with required collaborating services.
   BackgroundServiceManager({
     required BrokerManager brokerManager,
     required NetworkManager networkManager,
@@ -35,16 +37,23 @@ class BackgroundServiceManager extends ChangeNotifier
     }());
   }
 
+  /// Whether the app is currently in a background lifecycle state.
   bool get isBackground => _isBackground;
+
+  /// Timestamp of the most recent transition to background.
   DateTime? get lastBackgroundAt => _lastBackgroundAt;
+
+  /// User-facing warning about iOS background socket limitations.
   String get warningMessage =>
       'iOS may suspend sockets while the app is backgrounded or the screen is locked. MQTT HUB attempts recovery on wake, but background broker uptime cannot be guaranteed by the OS.';
 
+  /// Registers this manager as a widgets binding observer.
   Future<void> initialize() async {
     WidgetsBinding.instance.addObserver(this);
   }
 
   @override
+  /// Handles transitions and triggers best-effort wake recovery.
   void didChangeAppLifecycleState(AppLifecycleState state) {
     switch (state) {
       case AppLifecycleState.resumed:
@@ -76,6 +85,7 @@ class BackgroundServiceManager extends ChangeNotifier
   }
 
   @override
+  /// Unregisters the lifecycle observer.
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();

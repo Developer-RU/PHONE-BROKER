@@ -12,6 +12,7 @@ import 'broker_list_screen.dart';
 import 'import_export_screen.dart';
 import 'settings_screen.dart';
 
+/// Main shell screen with tab navigation across brokers, import/export, and debug.
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
 

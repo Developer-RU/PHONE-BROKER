@@ -8,7 +8,11 @@ import 'package:flutter/foundation.dart';
 import '../models/broker_models.dart';
 import 'log_manager.dart';
 
+/// In-process MQTT broker implementation backed by `ServerSocket`.
+///
+/// Handles MQTT connect/publish/subscribe flows for local iPhone-hosted brokers.
 class EmbeddedMqttBroker {
+  /// Creates a broker engine for [config] and lifecycle callbacks.
   EmbeddedMqttBroker({
     required this.config,
     required this.logManager,
@@ -28,8 +32,10 @@ class EmbeddedMqttBroker {
   BrokerRuntimeState _state = const BrokerRuntimeState.stopped();
   int _packetSeed = 1;
 
+  /// Whether the TCP server socket is currently bound and accepting clients.
   bool get isRunning => _server != null;
 
+  /// Serializable diagnostics snapshot for debug screens.
   Map<String, dynamic> get diagnostics => {
     'port': config.network.port,
     'isRunning': isRunning,
@@ -49,6 +55,7 @@ class EmbeddedMqttBroker {
         .toList(),
   };
 
+        /// Starts listening on the configured port and transitions to running state.
   Future<void> start() async {
     if (_server != null) {
       return;
@@ -96,6 +103,7 @@ class EmbeddedMqttBroker {
     }
   }
 
+  /// Stops all clients and closes the server socket.
   Future<void> stop({String reason = 'Stopped by user'}) async {
     _autoStopTimer?.cancel();
     final clients = _connections.values.toList();
@@ -118,6 +126,7 @@ class EmbeddedMqttBroker {
     );
   }
 
+  /// Disposes internal timers and closes sockets.
   Future<void> dispose() async {
     _autoStopTimer?.cancel();
     await _server?.close();

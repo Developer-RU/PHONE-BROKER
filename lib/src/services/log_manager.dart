@@ -4,13 +4,16 @@ import 'package:flutter/foundation.dart';
 
 import '../models/broker_models.dart';
 
+/// Maintains in-memory broker logs and exposes reactive updates.
 class LogManager extends ChangeNotifier {
   final Map<String, List<BrokerLogEntry>> _logsByBroker = {};
 
+  /// Returns read-only logs for a specific broker in reverse-chronological order.
   UnmodifiableListView<BrokerLogEntry> logsFor(String brokerId) {
     return UnmodifiableListView(_logsByBroker[brokerId] ?? const []);
   }
 
+  /// Appends a log entry for a broker and enforces configured capacity limits.
   void append(
     BrokerConfig config, {
     required BrokerLogDirection direction,
@@ -42,11 +45,13 @@ class LogManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Removes all logs for a broker.
   void clear(String brokerId) {
     _logsByBroker[brokerId]?.clear();
     notifyListeners();
   }
 
+  /// Builds a serializable payload for export/share operations.
   Map<String, dynamic> exportPayload(
     BrokerConfig config,
     List<BrokerLogEntry> logs,

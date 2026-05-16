@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+/// Animated startup splash shown while app services are bootstrapping.
 class StartupSplashScreen extends StatefulWidget {
+  /// Creates the splash screen with progress and status text.
   const StartupSplashScreen({
     super.key,
     required this.progress,
@@ -14,6 +16,7 @@ class StartupSplashScreen extends StatefulWidget {
   State<StartupSplashScreen> createState() => _StartupSplashScreenState();
 }
 
+/// Internal state that drives splash animations and progress rendering.
 class _StartupSplashScreenState extends State<StartupSplashScreen>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;

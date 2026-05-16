@@ -5,6 +5,7 @@ import '../localization/app_localizations.dart';
 import '../models/broker_models.dart';
 import '../services/settings_manager.dart';
 
+/// Opens the broker editor modal and returns updated config when saved.
 Future<BrokerConfig?> showBrokerEditorSheet(
   BuildContext context, {
   required BrokerConfig initialConfig,
@@ -18,7 +19,9 @@ Future<BrokerConfig?> showBrokerEditorSheet(
   );
 }
 
+/// Bottom-sheet editor for creating/updating broker configuration fields.
 class BrokerEditorSheet extends StatefulWidget {
+  /// Creates an editor for [initialConfig].
   const BrokerEditorSheet({super.key, required this.initialConfig});
 
   final BrokerConfig initialConfig;

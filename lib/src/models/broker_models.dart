@@ -1,10 +1,15 @@
+/// Runtime lifecycle states for an embedded broker instance.
 enum BrokerStatus { running, stopped, starting, error }
 
+/// Direction marker for broker log entries.
 enum BrokerLogDirection { inbound, outbound, system }
 
+/// High-level network mode inferred from available device signals.
 enum NetworkMode { offline, wifi, hotspot, cellular, unknown }
 
+/// Human-friendly labels for [BrokerStatus].
 extension BrokerStatusLabel on BrokerStatus {
+  /// Readable English label for UI and exports.
   String get label => switch (this) {
     BrokerStatus.running => 'Running',
     BrokerStatus.stopped => 'Stopped',
@@ -13,7 +18,9 @@ extension BrokerStatusLabel on BrokerStatus {
   };
 }
 
+/// Human-friendly labels for [BrokerLogDirection].
 extension BrokerLogDirectionLabel on BrokerLogDirection {
+  /// Readable direction label for UI chips and tables.
   String get label => switch (this) {
     BrokerLogDirection.inbound => 'IN',
     BrokerLogDirection.outbound => 'OUT',
@@ -21,7 +28,9 @@ extension BrokerLogDirectionLabel on BrokerLogDirection {
   };
 }
 
+/// Human-friendly labels for [NetworkMode].
 extension NetworkModeLabel on NetworkMode {
+  /// Readable mode name for UI display.
   String get label => switch (this) {
     NetworkMode.offline => 'Offline',
     NetworkMode.wifi => 'Wi-Fi',
@@ -31,7 +40,9 @@ extension NetworkModeLabel on NetworkMode {
   };
 }
 
+/// Network-level broker configuration.
 class BrokerNetworkSettings {
+  /// Creates network settings for a broker.
   const BrokerNetworkSettings({
     required this.port,
     required this.webSocketEnabled,
@@ -40,6 +51,7 @@ class BrokerNetworkSettings {
     required this.hotspotModeSupport,
   });
 
+  /// Returns default network settings for a given TCP port.
   factory BrokerNetworkSettings.defaults({required int port}) {
     return BrokerNetworkSettings(
       port: port,
@@ -50,6 +62,7 @@ class BrokerNetworkSettings {
     );
   }
 
+  /// Deserializes network settings from persisted JSON.
   factory BrokerNetworkSettings.fromJson(Map<String, dynamic> json) {
     return BrokerNetworkSettings(
       port: (json['port'] as num?)?.toInt() ?? 1883,
@@ -66,6 +79,7 @@ class BrokerNetworkSettings {
   final bool localNetworkOnly;
   final bool hotspotModeSupport;
 
+  /// Returns a modified copy of this configuration.
   BrokerNetworkSettings copyWith({
     int? port,
     bool? webSocketEnabled,
@@ -83,6 +97,7 @@ class BrokerNetworkSettings {
     );
   }
 
+  /// Serializes this object into JSON.
   Map<String, dynamic> toJson() => {
     'port': port,
     'webSocketEnabled': webSocketEnabled,
@@ -92,7 +107,9 @@ class BrokerNetworkSettings {
   };
 }
 
+/// Security/authentication settings for a broker.
 class BrokerSecuritySettings {
+  /// Creates broker security settings.
   const BrokerSecuritySettings({
     required this.anonymousMode,
     required this.username,
@@ -101,6 +118,7 @@ class BrokerSecuritySettings {
     required this.deniedClients,
   });
 
+  /// Returns permissive defaults suitable for local testing.
   const BrokerSecuritySettings.defaults()
     : anonymousMode = true,
       username = '',
@@ -108,6 +126,7 @@ class BrokerSecuritySettings {
       allowedClients = const [],
       deniedClients = const [];
 
+  /// Deserializes security settings from persisted JSON.
   factory BrokerSecuritySettings.fromJson(Map<String, dynamic> json) {
     return BrokerSecuritySettings(
       anonymousMode: json['anonymousMode'] as bool? ?? true,
@@ -130,6 +149,7 @@ class BrokerSecuritySettings {
   final List<String> allowedClients;
   final List<String> deniedClients;
 
+  /// Returns a modified copy of this configuration.
   BrokerSecuritySettings copyWith({
     bool? anonymousMode,
     String? username,
@@ -146,6 +166,7 @@ class BrokerSecuritySettings {
     );
   }
 
+  /// Serializes this object into JSON.
   Map<String, dynamic> toJson() => {
     'anonymousMode': anonymousMode,
     'username': username,
@@ -155,7 +176,9 @@ class BrokerSecuritySettings {
   };
 }
 
+/// Automation controls for broker lifecycle behavior.
 class BrokerAutomationSettings {
+  /// Creates automation settings.
   const BrokerAutomationSettings({
     required this.autoStart,
     required this.autoStopMinutes,
@@ -164,6 +187,7 @@ class BrokerAutomationSettings {
     required this.autoRestartOnCrash,
   });
 
+  /// Returns conservative defaults for manual operation.
   const BrokerAutomationSettings.defaults()
     : autoStart = false,
       autoStopMinutes = 0,
@@ -171,6 +195,7 @@ class BrokerAutomationSettings {
       scheduledStop = '',
       autoRestartOnCrash = true;
 
+  /// Deserializes automation settings from persisted JSON.
   factory BrokerAutomationSettings.fromJson(Map<String, dynamic> json) {
     return BrokerAutomationSettings(
       autoStart: json['autoStart'] as bool? ?? false,
@@ -187,6 +212,7 @@ class BrokerAutomationSettings {
   final String scheduledStop;
   final bool autoRestartOnCrash;
 
+  /// Returns a modified copy of this configuration.
   BrokerAutomationSettings copyWith({
     bool? autoStart,
     int? autoStopMinutes,
@@ -203,6 +229,7 @@ class BrokerAutomationSettings {
     );
   }
 
+  /// Serializes this object into JSON.
   Map<String, dynamic> toJson() => {
     'autoStart': autoStart,
     'autoStopMinutes': autoStopMinutes,
@@ -212,18 +239,22 @@ class BrokerAutomationSettings {
   };
 }
 
+/// Logging behavior settings for a broker.
 class BrokerLoggingSettings {
+  /// Creates logging settings.
   const BrokerLoggingSettings({
     required this.enabled,
     required this.maxEntries,
     required this.savePayloads,
   });
 
+  /// Returns production-safe logging defaults.
   const BrokerLoggingSettings.defaults()
     : enabled = true,
       maxEntries = 1000,
       savePayloads = true;
 
+  /// Deserializes logging settings from persisted JSON.
   factory BrokerLoggingSettings.fromJson(Map<String, dynamic> json) {
     return BrokerLoggingSettings(
       enabled: json['enabled'] as bool? ?? true,
@@ -236,6 +267,7 @@ class BrokerLoggingSettings {
   final int maxEntries;
   final bool savePayloads;
 
+  /// Returns a modified copy of this configuration.
   BrokerLoggingSettings copyWith({
     bool? enabled,
     int? maxEntries,
@@ -248,6 +280,7 @@ class BrokerLoggingSettings {
     );
   }
 
+  /// Serializes this object into JSON.
   Map<String, dynamic> toJson() => {
     'enabled': enabled,
     'maxEntries': maxEntries,
@@ -255,7 +288,9 @@ class BrokerLoggingSettings {
   };
 }
 
+/// Full persisted broker configuration aggregate.
 class BrokerConfig {
+  /// Creates a broker configuration.
   const BrokerConfig({
     required this.id,
     required this.name,
@@ -268,6 +303,7 @@ class BrokerConfig {
     required this.updatedAt,
   });
 
+  /// Creates a new draft broker with sensible defaults.
   factory BrokerConfig.draft({required String id, required int port}) {
     final now = DateTime.now();
     return BrokerConfig(
@@ -283,6 +319,7 @@ class BrokerConfig {
     );
   }
 
+  /// Deserializes broker configuration from JSON.
   factory BrokerConfig.fromJson(Map<String, dynamic> json) {
     return BrokerConfig(
       id: json['id'] as String,
@@ -321,6 +358,7 @@ class BrokerConfig {
   final DateTime createdAt;
   final DateTime updatedAt;
 
+  /// Returns a modified copy while bumping [updatedAt] when omitted.
   BrokerConfig copyWith({
     String? id,
     String? name,
@@ -345,6 +383,7 @@ class BrokerConfig {
     );
   }
 
+  /// Clones this broker to a new identifier and TCP port.
   BrokerConfig duplicate({required String id, required int port}) {
     return copyWith(
       id: id,
@@ -355,6 +394,7 @@ class BrokerConfig {
     );
   }
 
+  /// Serializes this object into JSON.
   Map<String, dynamic> toJson() => {
     'id': id,
     'name': name,
@@ -368,7 +408,9 @@ class BrokerConfig {
   };
 }
 
+/// Immutable log record emitted by the broker engine.
 class BrokerLogEntry {
+  /// Creates a log entry.
   const BrokerLogEntry({
     required this.id,
     required this.brokerId,
@@ -389,6 +431,7 @@ class BrokerLogEntry {
   final String clientId;
   final String message;
 
+  /// Serializes this object into JSON.
   Map<String, dynamic> toJson() => {
     'id': id,
     'brokerId': brokerId,
@@ -401,7 +444,9 @@ class BrokerLogEntry {
   };
 }
 
+/// Snapshot of a currently connected MQTT client.
 class BrokerClientSnapshot {
+  /// Creates a connected client snapshot.
   const BrokerClientSnapshot({
     required this.clientId,
     required this.ipAddress,
@@ -419,7 +464,9 @@ class BrokerClientSnapshot {
   final int packetCount;
 }
 
+/// Runtime state for a broker instance.
 class BrokerRuntimeState {
+  /// Creates runtime state.
   const BrokerRuntimeState({
     required this.status,
     required this.connectedClients,
@@ -437,6 +484,7 @@ class BrokerRuntimeState {
       clients = const [],
       errorMessage = null;
 
+  /// Current broker lifecycle status.
   final BrokerStatus status;
   final int connectedClients;
   final DateTime? startedAt;
@@ -444,9 +492,11 @@ class BrokerRuntimeState {
   final List<BrokerClientSnapshot> clients;
   final String? errorMessage;
 
+  /// Time elapsed since broker startup.
   Duration get uptime =>
       startedAt == null ? Duration.zero : DateTime.now().difference(startedAt!);
 
+  /// Returns an updated state copy.
   BrokerRuntimeState copyWith({
     BrokerStatus? status,
     int? connectedClients,
@@ -467,7 +517,9 @@ class BrokerRuntimeState {
   }
 }
 
+/// Device/network diagnostic snapshot used by broker dashboards.
 class NetworkSnapshot {
+  /// Creates a network snapshot.
   const NetworkSnapshot({
     required this.mode,
     required this.localAddresses,
@@ -483,12 +535,14 @@ class NetworkSnapshot {
       wifiName = null,
       updatedAt = null;
 
+  /// Inferred network mode.
   final NetworkMode mode;
   final List<String> localAddresses;
   final String? publicAddress;
   final String? wifiName;
   final DateTime? updatedAt;
 
+  /// First local IPv4 address or a fallback label.
   String get primaryLocalAddress =>
       localAddresses.isEmpty ? 'Unavailable' : localAddresses.first;
 }

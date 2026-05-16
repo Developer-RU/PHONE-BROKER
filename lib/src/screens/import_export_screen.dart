@@ -6,6 +6,7 @@ import '../services/broker_manager.dart';
 import '../services/import_export_service.dart';
 import '../services/log_manager.dart';
 
+/// UI for importing/exporting broker configurations and logs.
 class ImportExportScreen extends StatelessWidget {
   const ImportExportScreen({super.key});
 
@@ -96,6 +97,7 @@ class ImportExportScreen extends StatelessWidget {
     );
   }
 
+  /// Imports broker configurations and shows completion feedback.
   Future<void> _importConfigs(BuildContext context) async {
     final l10n = context.l10n;
     final service = context.read<ImportExportService>();

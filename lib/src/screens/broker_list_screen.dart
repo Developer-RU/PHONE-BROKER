@@ -6,7 +6,9 @@ import '../localization/app_localizations.dart';
 import '../models/broker_models.dart';
 import '../services/broker_manager.dart';
 
+/// Broker list with network snapshot header and per-broker controls.
 class BrokerListScreen extends StatelessWidget {
+  /// Creates the broker list and wires item callbacks.
   const BrokerListScreen({
     super.key,
     required this.onOpenBroker,

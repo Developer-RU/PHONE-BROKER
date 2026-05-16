@@ -6,6 +6,7 @@ import '../localization/app_localizations.dart';
 import '../screens/dashboard_screen.dart';
 import '../services/settings_manager.dart';
 
+/// Root `MaterialApp` widget with theming and localization configuration.
 class MqttHubApp extends StatelessWidget {
   const MqttHubApp({super.key});
 

@@ -5,6 +5,7 @@ import '../localization/app_localizations.dart';
 import '../services/broker_manager.dart';
 import '../services/settings_manager.dart';
 
+/// Global application settings screen.
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
@@ -130,6 +131,7 @@ class SettingsScreen extends StatelessWidget {
   }
 }
 
+/// Reusable plus/minus numeric stepper row.
 class _StepperTile extends StatelessWidget {
   const _StepperTile({
     required this.value,

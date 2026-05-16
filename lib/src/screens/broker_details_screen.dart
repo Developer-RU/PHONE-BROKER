@@ -9,7 +9,9 @@ import '../services/import_export_service.dart';
 import '../services/log_manager.dart';
 import '../widgets/broker_editor_sheet.dart';
 
+/// Detailed broker screen with overview, logs, and editable settings tabs.
 class BrokerDetailsScreen extends StatelessWidget {
+  /// Creates details screen for the broker identified by [brokerId].
   const BrokerDetailsScreen({super.key, required this.brokerId});
 
   final String brokerId;
@@ -63,6 +65,7 @@ class BrokerDetailsScreen extends StatelessWidget {
     );
   }
 
+  /// Opens broker editor and applies validated updates.
   Future<void> _editBroker(BuildContext context, BrokerConfig broker) async {
     final manager = context.read<BrokerManager>();
     final updated = await showBrokerEditorSheet(context, initialConfig: broker);

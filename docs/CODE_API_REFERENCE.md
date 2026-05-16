@@ -2,7 +2,7 @@
 
 Auto-generated reference of Dart source symbols (classes, top-level functions, and methods).
 
-Generated at: 2026-05-16 14:11:19 UTC UTC
+Generated at: 2026-05-16 14:16:28 UTC UTC
 
 ## lib/main.dart
 

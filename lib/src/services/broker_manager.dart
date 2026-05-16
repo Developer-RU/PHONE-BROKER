@@ -6,7 +6,9 @@ import 'mqtt_broker.dart';
 import 'network_manager.dart';
 import 'storage_manager.dart';
 
+/// Owns broker configurations, runtime states, and embedded broker instances.
 class BrokerManager extends ChangeNotifier {
+  /// Creates a broker manager with required service dependencies.
   BrokerManager({
     required StorageManager storageManager,
     required NetworkManager networkManager,
@@ -23,14 +25,17 @@ class BrokerManager extends ChangeNotifier {
   final Map<String, BrokerRuntimeState> _runtime = {};
   final Map<String, EmbeddedMqttBroker> _instances = {};
 
+  /// Broker configurations sorted by TCP port.
   List<BrokerConfig> get brokers {
     final items = _configs.values.toList()
       ..sort((left, right) => left.network.port.compareTo(right.network.port));
     return items;
   }
 
+  /// Latest network snapshot from [NetworkManager].
   NetworkSnapshot get networkSnapshot => _networkManager.snapshot;
 
+  /// Loads persisted broker configurations and initializes runtime state.
   Future<void> initialize() async {
     final stored = await _storageManager.loadBrokerConfigs();
     for (final broker in stored) {
@@ -40,12 +45,15 @@ class BrokerManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Returns runtime state for a broker, defaulting to stopped.
   BrokerRuntimeState runtimeFor(String brokerId) {
     return _runtime[brokerId] ?? const BrokerRuntimeState.stopped();
   }
 
+  /// Returns broker configuration by identifier, or `null` when absent.
   BrokerConfig? brokerById(String brokerId) => _configs[brokerId];
 
+  /// Adds a new broker configuration and persists it.
   Future<void> createBroker(BrokerConfig config) async {
     _configs[config.id] = config;
     _runtime[config.id] = const BrokerRuntimeState.stopped();
@@ -53,6 +61,7 @@ class BrokerManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Updates an existing broker and restarts it if it was running.
   Future<void> updateBroker(BrokerConfig config) async {
     final previous = _configs[config.id];
     if (previous == null) {
@@ -76,6 +85,7 @@ class BrokerManager extends ChangeNotifier {
     }
   }
 
+  /// Clones a broker with a new identifier and next available port.
   Future<void> duplicateBroker(String brokerId) async {
     final existing = _configs[brokerId];
     if (existing == null) {
@@ -88,6 +98,7 @@ class BrokerManager extends ChangeNotifier {
     await createBroker(duplicated);
   }
 
+  /// Stops, removes, and deletes a broker from persistent storage.
   Future<void> deleteBroker(String brokerId) async {
     await stopBroker(brokerId, reason: 'Broker deleted.');
     _instances.remove(brokerId);
@@ -97,6 +108,7 @@ class BrokerManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Starts the embedded broker instance for the given configuration.
   Future<void> startBroker(String brokerId) async {
     final config = _configs[brokerId];
     if (config == null) {
@@ -117,6 +129,7 @@ class BrokerManager extends ChangeNotifier {
     await instance.start();
   }
 
+  /// Stops a running broker instance and marks state as stopped.
   Future<void> stopBroker(
     String brokerId, {
     String reason = 'Stopped by user.',
@@ -131,11 +144,13 @@ class BrokerManager extends ChangeNotifier {
     await instance.dispose();
   }
 
+  /// Restarts a broker by stop/start sequence.
   Future<void> restartBroker(String brokerId) async {
     await stopBroker(brokerId, reason: 'Restarting broker.');
     await startBroker(brokerId);
   }
 
+  /// Imports broker configs while normalizing conflicting IDs and ports.
   Future<void> importConfigs(List<BrokerConfig> configs) async {
     for (final imported in configs) {
       final normalized = imported.copyWith(
@@ -150,6 +165,7 @@ class BrokerManager extends ChangeNotifier {
     }
   }
 
+  /// Attempts to restore expected running brokers after app wake.
   Future<void> recoverAfterWake() async {
     for (final broker in brokers) {
       final runtime = runtimeFor(broker.id);
@@ -163,10 +179,12 @@ class BrokerManager extends ChangeNotifier {
     }
   }
 
+  /// Returns `true` if any broker already uses the specified port.
   bool portInUse(int port) {
     return brokers.any((broker) => broker.network.port == port);
   }
 
+  /// Finds the next free port starting from [startingFrom].
   int nextAvailablePort({int startingFrom = 1883}) {
     var port = startingFrom;
     while (portInUse(port)) {
@@ -175,6 +193,7 @@ class BrokerManager extends ChangeNotifier {
     return port;
   }
 
+  /// Returns consolidated diagnostics for all brokers and engines.
   List<Map<String, dynamic>> diagnostics() {
     return brokers
         .map(
@@ -200,8 +219,10 @@ class BrokerManager extends ChangeNotifier {
         .toList();
   }
 
+        /// Creates a unique broker ID.
   String newBrokerId() => _newId();
 
+        /// Creates a new draft broker with optional default log limit.
   BrokerConfig newDraftBroker({int? defaultMaxLogEntries}) {
     final draft = BrokerConfig.draft(id: _newId(), port: nextAvailablePort());
     if (defaultMaxLogEntries == null) {
@@ -212,6 +233,7 @@ class BrokerManager extends ChangeNotifier {
     );
   }
 
+  /// Applies an upper log-entry limit to all broker configs.
   Future<void> applyGlobalLogLimit(int maxEntries) async {
     final updatedConfigs = brokers.map((config) {
       final limited = config.logging.maxEntries > maxEntries

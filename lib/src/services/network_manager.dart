@@ -8,14 +8,17 @@ import 'package:network_info_plus/network_info_plus.dart';
 
 import '../models/broker_models.dart';
 
+/// Probes local/public network state and publishes snapshots to the UI.
 class NetworkManager extends ChangeNotifier {
   final NetworkInfo _networkInfo = NetworkInfo();
 
   Timer? _refreshTimer;
   NetworkSnapshot _snapshot = const NetworkSnapshot.initial();
 
+  /// Latest computed network snapshot.
   NetworkSnapshot get snapshot => _snapshot;
 
+  /// Starts periodic and event-driven network probing.
   Future<void> initialize() async {
     // Do not block app startup on network probing/public IP lookup.
     _safeRefresh();
@@ -25,6 +28,7 @@ class NetworkManager extends ChangeNotifier {
     );
   }
 
+  /// Runs [refresh] in a guarded async zone to avoid bubbling probe errors.
   void _safeRefresh() {
     unawaited(() async {
       try {
@@ -35,6 +39,7 @@ class NetworkManager extends ChangeNotifier {
     }());
   }
 
+  /// Recomputes connectivity mode, local addresses, SSID and public IP.
   Future<void> refresh() async {
     final localAddresses = await _loadLocalAddresses();
     final wifiName = await _safeWifiName();
@@ -112,6 +117,7 @@ class NetworkManager extends ChangeNotifier {
   }
 
   @override
+  /// Cancels timers and releases resources.
   void dispose() {
     _refreshTimer?.cancel();
     super.dispose();
